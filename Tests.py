@@ -4,11 +4,8 @@
 import os.path
 import time
 from functools import wraps
-
-import dotenv
-
 from Utils.EnvGenerator import env
-from Utils.Logger import logger
+from nonebot.log import logger
 
 
 # 计时器函数
@@ -28,24 +25,16 @@ def timeit(func):
 @timeit
 def log_test():
     logger.success("这是一条SUCCESS!")
-    logger.fail("这是一条FAIL!")
+    logger.critical("这是一条FAIL!")
     logger.info("这是一条INFO!")
     logger.debug("这是一条DEBUG!")
     logger.warning("这是一条WARNING!")
     logger.error("这是一条ERROR!")
-    try:
-        if os.path.exists("./Logs"):
-            logger.debug("Logs文件夹存在。")
-        if os.path.exists(f"./Logs/{logger.log_file_name()}"):
-            logger.debug("日志文件存在。")
-        logger.success("LOG测试通过。")
-    except Exception as e:
-        logger.error(f"LOG测试失败。{e}")
 
 
 @timeit
 def env_test():
-    dotenv.load_dotenv(".env")
+    env.load()
     backup_host = os.getenv("HOST")
     backup_port = int(os.getenv("PORT"))
     try:
