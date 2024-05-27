@@ -1,4 +1,5 @@
-# /Utils/EEnvGenerator.py
+# ./Utils/EnvGenerator.py
+# 用于实现一个可以自动生成Env环境配置文件的类
 from dotenv import load_dotenv
 import os
 
@@ -39,7 +40,7 @@ DRIVER={self.driver}
 
     def set_port(self, port: int):
         # 安全起见
-        if port is int and 0 <= port <= 65536:
+        if 0 <= port <= 65536 and isinstance(port, int):
             self.port = port
 
 
