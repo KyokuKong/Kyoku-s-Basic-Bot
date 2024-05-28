@@ -60,9 +60,9 @@ def perm_test():
     try:
         perms.add_user_perm(123456789, "SUPERUSER")
         perms.add_group_perm(34567890, "SUPERGROUP")
-        item1 = perms.is_permission(123456789, 0, 3)
-        item2 = perms.is_permission(123456789, 0, 2)
-        item3 = perms.is_permission(34567890, 1, 1)
+        item1 = perms.has_permission(123456789, 0, 3)
+        item2 = perms.has_permission(123456789, 0, 2)
+        item3 = perms.has_permission(34567890, 1, 1)
         if item1 and item2 and item3 and item1 is True:
             logger.success("Permssion测试通过。")
     except Exception as e:

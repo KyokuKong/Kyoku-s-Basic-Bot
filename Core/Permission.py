@@ -71,7 +71,7 @@ class Permission:
         # 返回最大权限等级，如果没有结果则返回0
         return max(perm_values, default=0)
 
-    def is_permission(self, uid: int, utype: int, perm: int) -> bool:
+    def has_permission(self, uid: int, utype: int, perm: int) -> bool:
         """
         判断用户所属的权限值是否满足要求，满足返回True，否则返回False
         :param uid: QqId或GroupId
@@ -145,6 +145,27 @@ class Permission:
     def update_permission(self):
         self.read_perm_from_json()
         return True
+
+    def get_permission_name_by_level(self, permission_level: int, utype: int) -> str:
+        """
+        根据权限等级获取权限名称
+        :param permission_level: 权限等级
+        :param utype: 用户类型，0为QqId，1为GroupId
+        :return: 权限名称
+        """
+        if permission_level == 0:
+            return "NORMAL"
+        if utype == 0:
+            perm_map = self.user_perm_map
+        elif utype == 1:
+            perm_map = self.group_perm_map
+        else:
+            return "未知"
+
+        for key, value in perm_map.items():
+            if value == permission_level:
+                return key
+        return "未知"
 
 
 # 单例模式

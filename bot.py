@@ -15,4 +15,5 @@ def start_bot():
 
     # 在这里加载插件
     nonebot.load_plugins("Plugins")  # 本地插件
+    nonebot.load_plugins("Plugins/Basic")
     nonebot.run()
