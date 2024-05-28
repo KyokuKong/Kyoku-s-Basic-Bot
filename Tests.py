@@ -5,6 +5,7 @@ import os.path
 import time
 from functools import wraps
 from Utils.EnvGenerator import env
+from Core.Permission import perms
 from nonebot.log import logger
 
 
@@ -18,6 +19,7 @@ def timeit(func):
         elapsed_time = end_time - start_time
         print(f"{func.__name__} 使用了{elapsed_time:.4f}s")
         return result
+
     return wrapper
 
 
@@ -42,7 +44,7 @@ def env_test():
         env.set_port(8888)
         env.write()
         env.load()
-        if os.getenv("HOST") == "1.2.3.4" and os.getenv("PORT") == "8888":
+        if env.get("HOST") == "1.2.3.4" and env.get("PORT") == "8888":
             logger.success("ENV测试通过。")
     except Exception as e:
         logger.error(f"ENV测试失败。{e}")
@@ -53,6 +55,24 @@ def env_test():
         env.load()
 
 
+@timeit
+def perm_test():
+    try:
+        perms.add_user_perm(123456789, "SUPERUSER")
+        perms.add_group_perm(34567890, "SUPERGROUP")
+        item1 = perms.is_permission(123456789, 0, 3)
+        item2 = perms.is_permission(123456789, 0, 2)
+        item3 = perms.is_permission(34567890, 1, 1)
+        if item1 and item2 and item3 and item1 is True:
+            logger.success("Permssion测试通过。")
+    except Exception as e:
+        logger.error(f"Permssion测试失败。{e}")
+    finally:
+        perms.del_user_perm(123456789, "SUPERUSER")
+        perms.del_group_perm(34567890, "SUPERGROUP")
+
+
 # 执行测试
 log_test()
 env_test()
+perm_test()

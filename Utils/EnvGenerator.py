@@ -8,8 +8,8 @@ class EnvGenerator:
     def __init__(self):
         self.host = "0.0.0.0"
         self.port = 8080
-        self.command_start = ['']
-        self.command_sep = ['.']
+        self.command_start = '[""]'
+        self.command_sep = '["."]'
         self.driver = "~fastapi+~httpx+~websockets"
         self.is_auto_update = True
         self.repo = "https://github.com/KyokuKong/Kyoku-s-Basic-Bot.git"

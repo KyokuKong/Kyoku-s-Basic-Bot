@@ -3,3 +3,5 @@
 *.log
 .env
 *.lock
+/lagrange
+permission.json
